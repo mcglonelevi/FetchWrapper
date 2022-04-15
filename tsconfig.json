@@ -3,7 +3,7 @@
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "es2017", "es2018", "dom", "DOM.Iterable"],
     "sourceMap": true,
     "allowJs": true,
     "moduleResolution": "node",
@@ -11,10 +11,11 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "downlevelIteration": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
   ],
   "exclude": [
     "node_modules",
