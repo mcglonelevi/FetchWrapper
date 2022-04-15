@@ -13,10 +13,15 @@
     "noImplicitAny": true,
     "strictNullChecks": true
   },
+  "include": [
+    "./src/**/*"
+  ],
   "exclude": [
     "node_modules",
     "build",
     "webpack",
     "jest",
-  ],
+    "setup-tests.ts",
+    "jest.config.js"
+  ]
 }

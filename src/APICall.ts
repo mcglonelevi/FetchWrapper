@@ -1,39 +1,38 @@
 
+import { request } from './Request';
+
 type Statuses = number[];
-
-type URLSearchParamsParameters = ConstructorParameters<typeof URLSearchParams>;
-
+type URLSearchParamsParameters = ConstructorParameters<typeof URLSearchParams>[0];
 type APIConfig = {
   apiHost: string;
   path: string;
-  search: URLSearchParamsParameters;
+  search?: URLSearchParamsParameters;
 } & RequestInit;
 
-
-
-class APICall {
-  url: URL;
-
-  constructor(config: APIConfig) {
-    this.url = new URL(config.path, config.apiHost);
+function buildSearchParamsString(params: URLSearchParamsParameters | undefined) {
+  if (params) {
+    return `?${new URLSearchParams(params)}`;
   }
+
+  return '';
 }
 
-// class CustomAPICall extends APICall {
-//   constructor({ id }) {
-//     super({
-//       hostname: 'localhost:3000',
-//       path: `/user/${id}/foo`,
-//       body: '',
-//       queryParameters: {},
-//       method: 'GET',
-//       headers: '',
-//     });
-//   }
-// }
+export class APICall<ResponseType extends Response> {
+  url: URL;
+  requestInit: RequestInit;
 
-// try {
-//   await (
-//     new CreateUser({ userName, password })
-//   ).call();
-// }
+  constructor(config: APIConfig) {
+    const { path, apiHost, search, ...requestInit } = config;
+    const queryString = buildSearchParamsString(search);
+
+    this.url = new URL(
+      path + queryString,
+      apiHost
+    );
+    this.requestInit = requestInit;
+  }
+
+  async call() {
+    return request<ResponseType>(this.url.toString(), this.requestInit);
+  }
+}
