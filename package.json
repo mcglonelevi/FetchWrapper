@@ -1,5 +1,5 @@
 {
-  "name": "fetch-wrapper",
+  "name": "@mcglonelevi/fetch-wrapper",
   "version": "1.0.0",
   "description": "",
   "main": "build/dist/index.js",
